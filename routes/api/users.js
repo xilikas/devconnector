@@ -8,6 +8,10 @@ const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 const passport = require("passport");
 
+// Load input validation
+const validateRegisterInput = require("../../validation/register");
+const validateLoginInput = require("../../validation/login");
+
 // Load User model
 const User = require("../../models/User");
 
@@ -20,11 +24,19 @@ router.get("/test", (req, res) => res.json({ msg: "Users works" }));
 // @desc    Register user
 // @access  Public
 router.post("/register", (req, res) => {
+    const { errors, isValid } = validateRegisterInput(req.body);
+
+    // Check validation
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
+
     User.findOne({ email: req.body.email }).then(user => {
         // A user (data) is returned
         if (user) {
+            errors.email = "Email already exists";
             // If the user with this email address is found, throw error
-            return res.status(400).json({ email: "Email already exists" });
+            return res.status(400).json({ errors });
         } else {
             // Get avatar image
             const avatar = gravatar.url(req.body.email, {
@@ -47,7 +59,7 @@ router.post("/register", (req, res) => {
                     newUser.password = hash;
                     newUser
                         .save() // Save user to database
-                        .then(user => res.json(user)) // Send user data back to world
+                        .then(user => res.json(user)) // Send user data back to client
                         .catch(err => console.log(err)); // If something happens, send error to console
                 });
             });
@@ -59,13 +71,23 @@ router.post("/register", (req, res) => {
 // @desc    Login user / Returning JWT (JSON Web Token)
 // @access  Public
 router.post("/login", (req, res) => {
+    const { errors, isValid } = validateLoginInput(req.body);
+
+    // Check validation
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
+
     const email = req.body.email;
     const password = req.body.password;
 
     // Find user by email
     User.findOne({ email }).then(user => {
         // Check for user
-        if (!user) res.status(404).json({ email: "User not found" });
+        if (!user) {
+            errors.email = "User not found";
+            res.status(404).json({ errors });
+        }
 
         // Check password
         bcrypt.compare(password, user.password).then(isMatch => {
@@ -90,7 +112,8 @@ router.post("/login", (req, res) => {
                     }
                 );
             } else {
-                return res.status(400).json({ password: "Password incorrect" });
+                errors.password = "Password incorrect";
+                return res.status(400).json({ errors });
             }
         });
     });
@@ -103,7 +126,12 @@ router.get(
     "/current",
     passport.authenticate("jwt", { session: false }),
     (req, res) => {
-        res.json(req.user);
+        res.json({
+            // Don't want to send the password back to the client
+            id: req.user.id,
+            name: req.user.name,
+            email: req.user.email
+        });
     }
 );
 
