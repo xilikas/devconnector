@@ -4,6 +4,9 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 // const keys = require("../../config/keys");
 
+// Load validation
+const validateProfileInput = require("../../validation/profile");
+
 // Load Models
 const Profile = require("../../models/Profile");
 const User = require("../../models/User");
@@ -22,6 +25,7 @@ router.get(
     (req, res) => {
         const errors = {};
         Profile.findOne({ user: req.user.id })
+            .populate("user", ["name", "avatar"]) // Get name and avatar from User injected data
             .then(profile => {
                 if (!profile) {
                     errors.noprofile = "There is no profile for this user.";
@@ -40,6 +44,14 @@ router.post(
     "/",
     passport.authenticate("jwt", { session: false }),
     (req, res) => {
+        const { errors, isValid } = validateProfileInput(req.body);
+
+        // Check validation
+        if (!isValid) {
+            // Return errors
+            return res.status(400).json(errors);
+        }
+
         // Get fields
         const profileFields = {};
         profileFields.user = req.user.id; // Logged in user from passport
@@ -90,9 +102,9 @@ router.post(
                         }
 
                         // No profile has handle
-                        new Profile(profileFields).save.then(profile =>
-                            res.json(profile)
-                        );
+                        new Profile(profileFields)
+                            .save()
+                            .then(profile => res.json(profile));
                     }
                 );
             }
