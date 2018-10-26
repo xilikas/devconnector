@@ -36,7 +36,7 @@ router.post("/register", (req, res) => {
         if (user) {
             errors.email = "Email already exists";
             // If the user with this email address is found, throw error
-            return res.status(400).json({ errors });
+            return res.status(400).json(errors);
         } else {
             // Get avatar image
             const avatar = gravatar.url(req.body.email, {
@@ -56,6 +56,7 @@ router.post("/register", (req, res) => {
             bcrypt.genSalt(10, (err, salt) => {
                 bcrypt.hash(newUser.password, salt, (err, hash) => {
                     if (err) throw err;
+                    // The hashed password is the one that's stored; user sent password is never transferred to server
                     newUser.password = hash;
                     newUser
                         .save() // Save user to database
@@ -86,7 +87,7 @@ router.post("/login", (req, res) => {
         // Check for user
         if (!user) {
             errors.email = "User not found";
-            res.status(404).json({ errors });
+            res.status(404).json(errors);
         }
 
         // Check password
@@ -99,7 +100,7 @@ router.post("/login", (req, res) => {
                     avatar: user.avatar
                 };
 
-                // Sign token
+                // Sign token, user information gets sent as json
                 jwt.sign(
                     payload,
                     keys.secretOrKey,
@@ -113,7 +114,7 @@ router.post("/login", (req, res) => {
                 );
             } else {
                 errors.password = "Password incorrect";
-                return res.status(400).json({ errors });
+                return res.status(400).json(errors);
             }
         });
     });
@@ -128,6 +129,7 @@ router.get(
     (req, res) => {
         res.json({
             // Don't want to send the password back to the client
+            // Send back only some data
             id: req.user.id,
             name: req.user.name,
             email: req.user.email
