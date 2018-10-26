@@ -41,7 +41,7 @@ const ProfileSchema = new Schema({
         // Array of objects
         {
             title: {
-                String,
+                type: String,
                 required: true
             },
             company: {
@@ -71,7 +71,7 @@ const ProfileSchema = new Schema({
         // Array of objects
         {
             school: {
-                String,
+                type: String,
                 required: true
             },
             degree: {
