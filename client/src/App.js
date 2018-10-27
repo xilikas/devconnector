@@ -1,17 +1,16 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import { Provider } from "react-redux";
 import jwt_decode from "jwt-decode";
-import setAuthToken from "./utils/setAuthToken";
-import { setCurrentUser } from "./actions/authActions";
-import store from "./store";
-import Navbar from "./components/layout/Navbar";
+import React, { Component } from "react";
+import { Provider } from "react-redux";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { setCurrentUser, logoutUser } from "./actions/authActions";
+import "./App.css";
+import Login from "./components/auth/Login";
+import Register from "./components/auth/Register";
 import Footer from "./components/layout/Footer";
 import Landing from "./components/layout/Landing";
-import Register from "./components/auth/Register";
-import Login from "./components/auth/Login";
-
-import "./App.css";
+import Navbar from "./components/layout/Navbar";
+import store from "./store";
+import setAuthToken from "./utils/setAuthToken";
 
 // Check for token
 if (localStorage["jwt-token"]) {
@@ -21,6 +20,15 @@ if (localStorage["jwt-token"]) {
     const decoded = jwt_decode(localStorage["jwt-token"]);
     // Set user and isAuthenticated
     store.dispatch(setCurrentUser(decoded));
+
+    // Check for expired token
+    const currentTime = Date.now() / 1000;
+    if (decoded.exp < currentTime) {
+        // Logout and redirect
+        store.dispatch(logoutUser());
+        window.location.href = "/login";
+    }
+    // TODO: Clear current profile
 }
 
 class App extends Component {
