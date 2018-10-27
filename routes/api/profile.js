@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose");
 const passport = require("passport");
-// const keys = require("../../config/keys");
 
 // Load validation
 const validateProfileInput = require("../../validation/profile");
