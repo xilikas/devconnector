@@ -1,8 +1,11 @@
-import React, { Component } from "react";
-import axios from "axios";
 import classnames from "classnames";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { registerUser } from "../../actions/authActions";
 
-export default class Register extends Component {
+class Register extends Component {
     constructor() {
         super();
 
@@ -20,15 +23,19 @@ export default class Register extends Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    // Every keypress will activate this function; set keypresses to component state
-    /*
-    onChange(e) {
-        this.setState({ [e.target.name]: e.target.value });
+    // Test for certain properties; assigns to component state
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) this.setState({ errors: nextProps.errors });
     }
-    */
 
-    // Instead of doing above, can rewrite as arrow function
+    // Every keypress will activate this function; set keypresses to component state
     onChange = e => {
+        /*
+        onChange(e) {
+            this.setState({ [e.target.name]: e.target.value });
+        }
+        */
+        // Instead of doing above, can rewrite as arrow function
         this.setState({ [e.target.name]: e.target.value });
     };
 
@@ -43,13 +50,16 @@ export default class Register extends Component {
             password2: this.state.password2
         };
 
+        // Use this.props.history to redirect from within action
+        this.props.registerUser(newUser, this.props.history);
+
         // Making POST request to /api/users/register backend
         // Don't need "...localhost:5000" because of proxy value in package.json
         // Will be re-implemented in Redux; just testing API
-        axios
-            .post("/api/users/register", newUser)
-            .then(res => console.log(res.data))
-            .catch(err => this.setState({ errors: err.response.data }));
+        // axios
+        //     .post("/api/users/register", newUser)
+        //     .then(res => console.log(res.data))
+        //     .catch(err => this.setState({ errors: err.response.data }));
     }
 
     render() {
@@ -159,3 +169,20 @@ export default class Register extends Component {
         );
     }
 }
+
+Register.propTypes = {
+    registerUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
+};
+
+// Get from application state
+const mapStateToProps = state => ({
+    auth: state.auth,
+    errors: state.errors
+});
+
+export default connect(
+    mapStateToProps,
+    { registerUser }
+)(withRouter(Register));
