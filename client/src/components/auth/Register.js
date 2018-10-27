@@ -113,9 +113,11 @@ class Register extends Component {
                                         value={this.state.email}
                                         onChange={this.onChange}
                                     />
-                                    <div className="invalid-feedback">
-                                        {errors.email}
-                                    </div>
+                                    {errors.email && (
+                                        <div className="invalid-feedback">
+                                            {errors.email}
+                                        </div>
+                                    )}
                                     <small className="form-text text-muted">
                                         This site uses Gravatar so if you want a
                                         profile image, use a Gravatar email
@@ -135,9 +137,11 @@ class Register extends Component {
                                         value={this.state.password}
                                         onChange={this.onChange}
                                     />
-                                    <div className="invalid-feedback">
-                                        {errors.password}
-                                    </div>
+                                    {errors.password && (
+                                        <div className="invalid-feedback">
+                                            {errors.password}
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="form-group">
                                     <input
@@ -153,9 +157,11 @@ class Register extends Component {
                                         value={this.state.password2}
                                         onChange={this.onChange}
                                     />
-                                    <div className="invalid-feedback">
-                                        {errors.password2}
-                                    </div>
+                                    {errors.password2 && (
+                                        <div className="invalid-feedback">
+                                            {errors.password2}
+                                        </div>
+                                    )}
                                 </div>
                                 <input
                                     type="submit"
