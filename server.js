@@ -31,7 +31,6 @@ require("./config/passport")(passport);
 app.get("/", (req, res) => res.send("Hello World")); // ES6 arrow notation
 
 // Use routes; these are the beginning parts of the URL
-
 app.use("/api/users", users);
 app.use("/api/profile", profile);
 app.use("/api/posts", posts);
