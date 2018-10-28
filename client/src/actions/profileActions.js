@@ -30,6 +30,46 @@ export const getCurrentProfile = () => dispatch => {
         );
 };
 
+// Get current profile by handle
+export const getProfileByHandle = handle => dispatch => {
+    dispatch(setProfileLoading());
+    axios
+        .get(`/api/profile/handle/${handle}`)
+        .then(res =>
+            // Existing user
+            dispatch({
+                type: GET_PROFILE,
+                payload: res.data
+            })
+        )
+        .catch(err =>
+            // New logged in user, must create profile
+            dispatch({
+                type: GET_PROFILE,
+                payload: null
+            })
+        );
+};
+
+// Get current profile by id
+export const getProfileById = id => dispatch => {
+    dispatch(setProfileLoading());
+    axios
+        .get(`/api/profile/id/${id}`)
+        .then(res =>
+            dispatch({
+                type: GET_PROFILE,
+                payload: res.data
+            })
+        )
+        .catch(err =>
+            dispatch({
+                type: GET_PROFILE,
+                payload: null
+            })
+        );
+};
+
 // Create profile
 export const createProfile = (profileData, history) => dispatch => {
     axios
