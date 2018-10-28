@@ -20,12 +20,12 @@ class Login extends Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
+    // After login, lifecycle methods activate and redirect to dashboard
     componentDidMount() {
         if (this.props.auth.isAuthenticated)
             this.props.history.push("/dashboard");
     }
 
-    // Every keypress will activate this function; set keypresses to component state
     componentWillReceiveProps(nextProps) {
         if (nextProps.auth.isAuthenticated)
             this.props.history.push("/dashboard");
