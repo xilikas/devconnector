@@ -22,11 +22,11 @@ class CreateProfile extends Component {
             status: "",
             githubusername: "",
             bio: "",
-            twitter: "",
-            facebook: "",
-            linkedin: "",
-            youtube: "",
-            instagram: "",
+            twitter: "https://twitter.com/",
+            facebook: "https://facebook.com/",
+            linkedin: "https://linkedin.com/in/",
+            youtube: "https://youtube.com/",
+            instagram: "https://instagram.com/",
             errors: {}
         };
 

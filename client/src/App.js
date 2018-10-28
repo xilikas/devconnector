@@ -14,6 +14,7 @@ import CreateProfile from "./components/create-profile/CreateProfile";
 import EditProfile from "./components/edit-profile/EditProfile";
 import AddExperience from "./components/add-credentials/AddExperience";
 import AddEducation from "./components/add-credentials/AddEducation";
+import Profiles from "./components/profiles/Profiles";
 import store from "./store";
 import setAuthToken from "./utils/setAuthToken";
 import { clearCurrentProfile } from "./actions/profileActions";
@@ -55,6 +56,11 @@ class App extends Component {
                                 component={Register}
                             />
                             <Route exact path="/login" component={Login} />
+                            <Route
+                                exact
+                                path="/profiles"
+                                component={Profiles}
+                            />
                             <Switch>
                                 <PrivateRoute
                                     exact
