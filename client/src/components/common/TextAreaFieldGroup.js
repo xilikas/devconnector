@@ -36,4 +36,8 @@ TextAreaFieldGroup.propTypes = {
     error: PropTypes.string
 };
 
+TextAreaFieldGroup.defaultProps = {
+    type: "text"
+};
+
 export default TextAreaFieldGroup;
