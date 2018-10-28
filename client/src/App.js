@@ -21,6 +21,7 @@ import setAuthToken from "./utils/setAuthToken";
 import { clearCurrentProfile } from "./actions/profileActions";
 
 import PrivateRoute from "./components/common/PrivateRoute";
+import NotFound from "./components/not-found/NotFound";
 
 // Check for token
 if (localStorage["jwt-token"]) {
@@ -102,6 +103,11 @@ class App extends Component {
                                     component={AddEducation}
                                 />
                             </Switch>
+                            <Route
+                                exact
+                                path="/not-found"
+                                component={NotFound}
+                            />
                         </div>
                         <Footer />
                     </div>

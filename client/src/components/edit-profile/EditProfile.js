@@ -21,7 +21,7 @@ class EditProfile extends Component {
             location: "",
             skills: "",
             status: "",
-            githubusername: "",
+            githubUsername: "",
             bio: "",
             twitter: "",
             facebook: "",
@@ -50,8 +50,8 @@ class EditProfile extends Component {
             profile.location = !isEmpty(profile.location)
                 ? profile.location
                 : "";
-            profile.githubusername = !isEmpty(profile.githubusername)
-                ? profile.githubusername
+            profile.githubUsername = !isEmpty(profile.githubUsername)
+                ? profile.githubUsername
                 : "";
             profile.bio = !isEmpty(profile.bio) ? profile.bio : "";
 
@@ -84,7 +84,7 @@ class EditProfile extends Component {
                 location: profile.location,
                 status: profile.status,
                 skills: skillsCSV,
-                githubusername: profile.githubusername,
+                githubUsername: profile.githubUsername,
                 bio: profile.bio,
                 twitter: profile.twitter,
                 facebook: profile.facebook,
@@ -105,7 +105,7 @@ class EditProfile extends Component {
             location: this.state.location,
             status: this.state.status,
             skills: this.state.skills,
-            githubusername: this.state.githubusername,
+            githubUsername: this.state.githubUsername,
             bio: this.state.bio,
             twitter: this.state.twitter,
             facebook: this.state.facebook,
@@ -229,6 +229,14 @@ class EditProfile extends Component {
                                     info="Your own company or one you work for."
                                 />
                                 <TextFieldGroup
+                                    placeholder="Website"
+                                    name="website"
+                                    value={this.state.website}
+                                    onChange={this.onChange}
+                                    error={errors.website}
+                                    info="Your own website or company website."
+                                />
+                                <TextFieldGroup
                                     placeholder="Location"
                                     name="location"
                                     value={this.state.location}
@@ -246,10 +254,10 @@ class EditProfile extends Component {
                                 />
                                 <TextFieldGroup
                                     placeholder="GitHub Username"
-                                    name="githubusername"
-                                    value={this.state.githubusername}
+                                    name="githubUsername"
+                                    value={this.state.githubUsername}
                                     onChange={this.onChange}
-                                    error={errors.githubusername}
+                                    error={errors.githubUsername}
                                     info="If you want your latest repos and a GitHub link, include your username."
                                 />
                                 <TextAreaFieldGroup

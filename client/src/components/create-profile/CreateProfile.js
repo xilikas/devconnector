@@ -20,13 +20,13 @@ class CreateProfile extends Component {
             location: "",
             skills: "",
             status: "",
-            githubusername: "",
+            githubUsername: "",
             bio: "",
-            twitter: "https://twitter.com/",
-            facebook: "https://facebook.com/",
-            linkedin: "https://linkedin.com/in/",
-            youtube: "https://youtube.com/",
-            instagram: "https://instagram.com/",
+            twitter: "",
+            facebook: "",
+            linkedin: "",
+            youtube: "",
+            instagram: "",
             errors: {}
         };
 
@@ -48,7 +48,7 @@ class CreateProfile extends Component {
             location: this.state.location,
             status: this.state.status,
             skills: this.state.skills,
-            githubusername: this.state.githubusername,
+            githubUsername: this.state.githubUsername,
             bio: this.state.bio,
             twitter: this.state.twitter,
             facebook: this.state.facebook,
@@ -173,6 +173,14 @@ class CreateProfile extends Component {
                                     info="Your own company or one you work for."
                                 />
                                 <TextFieldGroup
+                                    placeholder="Website"
+                                    name="website"
+                                    value={this.state.website}
+                                    onChange={this.onChange}
+                                    error={errors.website}
+                                    info="Your own website or company website."
+                                />
+                                <TextFieldGroup
                                     placeholder="Location"
                                     name="location"
                                     value={this.state.location}
@@ -190,10 +198,10 @@ class CreateProfile extends Component {
                                 />
                                 <TextFieldGroup
                                     placeholder="GitHub Username"
-                                    name="githubusername"
-                                    value={this.state.githubusername}
+                                    name="githubUsername"
+                                    value={this.state.githubUsername}
                                     onChange={this.onChange}
-                                    error={errors.githubusername}
+                                    error={errors.githubUsername}
                                     info="If you want your latest repos and a GitHub link, include your username."
                                 />
                                 <TextAreaFieldGroup

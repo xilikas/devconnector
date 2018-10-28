@@ -34,6 +34,7 @@ class ProfileHeader extends Component {
                             <p>
                                 {isEmpty(profile.website) ? null : (
                                     <a
+                                        rel="noopener noreferrer"
                                         target="_blank"
                                         className="text-white p-2"
                                         href={profile.website}
@@ -47,6 +48,7 @@ class ProfileHeader extends Component {
                                     profile.social && profile.social.linkedin
                                 ) ? null : (
                                     <a
+                                        rel="noopener noreferrer"
                                         target="_blank"
                                         className="text-white p-2"
                                         href={profile.social.linkedin}
@@ -58,6 +60,7 @@ class ProfileHeader extends Component {
                                     profile.social && profile.social.twitter
                                 ) ? null : (
                                     <a
+                                        rel="noopener noreferrer"
                                         target="_blank"
                                         className="text-white p-2"
                                         href={profile.social.twitter}
@@ -69,6 +72,7 @@ class ProfileHeader extends Component {
                                     profile.social && profile.social.facebook
                                 ) ? null : (
                                     <a
+                                        rel="noopener noreferrer"
                                         target="_blank"
                                         className="text-white p-2"
                                         href={profile.social.facebook}
@@ -81,6 +85,7 @@ class ProfileHeader extends Component {
                                     profile.social && profile.social.instagram
                                 ) ? null : (
                                     <a
+                                        rel="noopener noreferrer"
                                         target="_blank"
                                         className="text-white p-2"
                                         href={profile.social.instagram}
@@ -92,6 +97,7 @@ class ProfileHeader extends Component {
                                     profile.social && profile.social.youtube
                                 ) ? null : (
                                     <a
+                                        rel="noopener noreferrer"
                                         target="_blank"
                                         className="text-white p-2"
                                         href={profile.social.youtube}
