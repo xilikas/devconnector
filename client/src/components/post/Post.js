@@ -1,13 +1,12 @@
-import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-
-import Spinner from "../common/Spinner";
-import { getPost } from "../../actions/postActions";
+import PropTypes from "prop-types";
 import PostItem from "../posts/PostItem";
 import CommentForm from "./CommentForm";
 import CommentFeed from "./CommentFeed";
+import Spinner from "../common/Spinner";
+import { getPost } from "../../actions/postActions";
 
 class Post extends Component {
     componentDidMount() {
@@ -18,9 +17,9 @@ class Post extends Component {
         const { post, loading } = this.props.post;
         let postContent;
 
-        if (post === null || loading || Object.keys(post) === 0) {
+        if (post === null || loading || Object.keys(post).length === 0) {
             postContent = <Spinner />;
-        } else
+        } else {
             postContent = (
                 <div>
                     {/* Prevents action from displaying on page */}
@@ -29,6 +28,7 @@ class Post extends Component {
                     <CommentFeed postId={post._id} comments={post.comments} />
                 </div>
             );
+        }
 
         return (
             <div className="post">
